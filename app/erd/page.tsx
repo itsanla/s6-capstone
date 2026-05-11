@@ -33,8 +33,10 @@ type ErdTable = {
 
 type ErdRelation = {
   name: string;
-  from: { schema: string; table: string; column: string };
-  to: { schema: string; table: string; column: string };
+  from: { schema: string; table: string; columns?: string[]; column?: string };
+  to: { schema: string; table: string; columns?: string[]; column?: string };
+  isUnique?: boolean;
+  isNullable?: boolean;
 };
 
 type ErdPayload = {
@@ -54,7 +56,7 @@ type LayoutNode = {
 
 const buildLayout = (tables: ErdTable[]) => {
   const nodes: LayoutNode[] = [];
-  const columns = 3;
+  const columns = Math.max(1, Math.ceil(Math.sqrt(tables.length)));
   const maxColumns = Math.max(
     1,
     ...tables.map((table) => table.columns.length)
@@ -89,6 +91,7 @@ export default function ErdPage() {
   const [data, setData] = useState<ErdPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 40, y: 40 });
   const dragState = useRef<{ active: boolean; x: number; y: number }>({
@@ -185,7 +188,7 @@ export default function ErdPage() {
 
   return (
     <div
-      className={`${grotesk.variable} ${mono.variable} min-h-screen w-full bg-[radial-gradient(circle_at_top,_#fff2d1,_#f8f5f0_40%,_#f2efe8_70%)] text-slate-900`}
+      className={`${grotesk.variable} ${mono.variable} min-h-screen w-full bg-[radial-gradient(circle_at_top,_#f5f5f7,_#eceff3_45%,_#e6e8ec_70%)] text-slate-900`}
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 pb-12 pt-10">
         <header className="flex flex-col gap-3">
@@ -244,7 +247,7 @@ export default function ErdPage() {
             </div>
           ) : (
             <div
-              className="relative h-[720px] w-full overflow-auto rounded-3xl border border-slate-200 bg-[linear-gradient(120deg,_rgba(15,23,42,0.03),_rgba(15,23,42,0.01))]"
+              className="relative h-[720px] w-full overflow-auto rounded-3xl border border-slate-200 bg-[linear-gradient(120deg,_rgba(15,23,42,0.16),_rgba(15,23,42,0.08))]"
               ref={canvasRef}
               onWheel={onWheel}
               onPointerDown={onPointerDown}
@@ -263,8 +266,17 @@ export default function ErdPage() {
               >
                 <svg
                   className="absolute left-0 top-0 h-full w-full"
-                  style={{ pointerEvents: "none" }}
+                  style={{ pointerEvents: "none", zIndex: 10 }}
                 >
+                  <defs>
+                    <filter id="relGlow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="2.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   {relations.map((rel) => {
                     const from = nodeMap.get(rel.fromKey);
                     const to = nodeMap.get(rel.toKey);
@@ -273,19 +285,127 @@ export default function ErdPage() {
                     const fromY = from.y + from.height / 2;
                     const toX = to.x;
                     const toY = to.y + to.height / 2;
+                    const focusKey = selected || hovered;
                     const isActive =
-                      selected &&
-                      (selected === rel.fromKey || selected === rel.toKey);
+                      focusKey &&
+                      (focusKey === rel.fromKey || focusKey === rel.toKey);
+                    const isUnique = !!rel.isUnique;
+                    const isNullable = !!rel.isNullable;
                     return (
                       <path
                         key={`${rel.name}-${rel.fromKey}-${rel.toKey}`}
                         d={`M ${fromX} ${fromY} C ${fromX + 40} ${fromY}, ${
                           toX - 40
                         } ${toY}, ${toX} ${toY}`}
-                        stroke={isActive ? "#f59e0b" : "#cbd5f5"}
-                        strokeWidth={isActive ? 2.5 : 1.2}
+                        stroke={isActive ? "#f59e0b" : "#64748b"}
+                        strokeWidth={isActive ? 3.5 : 2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        filter={isActive ? "url(#relGlow)" : undefined}
                         fill="none"
-                        opacity={isActive ? 0.9 : 0.6}
+                        opacity={isActive ? 0.95 : 0.75}
+                        className={isActive ? "erd-flow" : undefined}
+                        style={{ color: isActive ? "#f59e0b" : "#64748b" }}
+                      />
+                    );
+                  })}
+                </svg>
+                <svg
+                  className="absolute left-0 top-0 h-full w-full"
+                  style={{ pointerEvents: "none", zIndex: 60 }}
+                >
+                  <defs>
+                    <marker
+                      id="erdOneTop"
+                      markerWidth="16"
+                      markerHeight="16"
+                      refX="14"
+                      refY="8"
+                      orient="auto"
+                      markerUnits="userSpaceOnUse"
+                    >
+                      <line x1="14" y1="2" x2="14" y2="14" stroke="currentColor" strokeWidth="2.5" />
+                    </marker>
+                    <marker
+                      id="erdManyTop"
+                      markerWidth="20"
+                      markerHeight="20"
+                      refX="18"
+                      refY="10"
+                      orient="auto"
+                      markerUnits="userSpaceOnUse"
+                    >
+                      <path
+                        d="M 18 10 L 4 4 M 18 10 L 4 10 M 18 10 L 4 16"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        fill="none"
+                      />
+                    </marker>
+                    <marker
+                      id="erdZeroOneTop"
+                      markerWidth="20"
+                      markerHeight="20"
+                      refX="18"
+                      refY="10"
+                      orient="auto"
+                      markerUnits="userSpaceOnUse"
+                    >
+                      <circle cx="6" cy="10" r="3" fill="none" stroke="currentColor" strokeWidth="2.2" />
+                      <line x1="18" y1="2" x2="18" y2="18" stroke="currentColor" strokeWidth="2.5" />
+                    </marker>
+                    <marker
+                      id="erdZeroManyTop"
+                      markerWidth="24"
+                      markerHeight="24"
+                      refX="22"
+                      refY="12"
+                      orient="auto"
+                      markerUnits="userSpaceOnUse"
+                    >
+                      <circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2.2" />
+                      <path
+                        d="M 22 12 L 8 6 M 22 12 L 8 12 M 22 12 L 8 18"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        fill="none"
+                      />
+                    </marker>
+                  </defs>
+                  {relations.map((rel) => {
+                    const from = nodeMap.get(rel.fromKey);
+                    const to = nodeMap.get(rel.toKey);
+                    if (!from || !to) return null;
+                    const fromX = from.x + NODE_WIDTH;
+                    const fromY = from.y + from.height / 2;
+                    const toX = to.x;
+                    const toY = to.y + to.height / 2;
+                    const focusKey = selected || hovered;
+                    const isActive =
+                      focusKey &&
+                      (focusKey === rel.fromKey || focusKey === rel.toKey);
+                    const isUnique = !!rel.isUnique;
+                    const isNullable = !!rel.isNullable;
+                    const markerStart = isNullable
+                      ? isUnique
+                        ? "url(#erdZeroOneTop)"
+                        : "url(#erdZeroManyTop)"
+                      : isUnique
+                      ? "url(#erdOneTop)"
+                      : "url(#erdManyTop)";
+                    const markerEnd = "url(#erdOneTop)";
+                    return (
+                      <path
+                        key={`${rel.name}-${rel.fromKey}-${rel.toKey}-markers`}
+                        d={`M ${fromX} ${fromY} C ${fromX + 40} ${fromY}, ${
+                          toX - 40
+                        } ${toY}, ${toX} ${toY}`}
+                        stroke="transparent"
+                        strokeWidth={1}
+                        fill="none"
+                        markerStart={markerStart}
+                        markerEnd={markerEnd}
+                        style={{ color: isActive ? "#f59e0b" : "#64748b" }}
                       />
                     );
                   })}
@@ -301,14 +421,14 @@ export default function ErdPage() {
                     .flatMap((rel) => [rel.fromKey, rel.toKey]);
 
                   const isRelated =
-                    selected &&
-                    selected !== node.key &&
-                    relatedKeys.includes(selected);
+                    (selected || hovered) &&
+                    (selected || hovered) !== node.key &&
+                    relatedKeys.includes(selected || hovered || "");
 
                   return (
                     <div
                       key={node.key}
-                      className={`absolute rounded-2xl border bg-white p-4 shadow-lg transition duration-200 ${
+                      className={`absolute z-40 rounded-2xl border bg-white p-4 shadow-lg transition duration-200 ${
                         isSelected
                           ? "border-amber-400 ring-2 ring-amber-200"
                           : isRelated
@@ -320,6 +440,8 @@ export default function ErdPage() {
                         left: node.x,
                         top: node.y,
                       }}
+                      onMouseEnter={() => setHovered(node.key)}
+                      onMouseLeave={() => setHovered((prev) => (prev === node.key ? null : prev))}
                     >
                       <button
                         type="button"
@@ -377,11 +499,17 @@ export default function ErdPage() {
                     className="mb-2 flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2 text-left hover:border-amber-300"
                   >
                     <span className="text-slate-700">
-                      {rel.from.table}.{rel.from.column}
+                      {rel.from.table}.
+                      {(rel.from.columns ||
+                        (rel.from.column ? [rel.from.column] : ["?"])
+                      ).join(",")}
                     </span>
                     <span className="text-slate-400">→</span>
                     <span className="text-slate-700">
-                      {rel.to.table}.{rel.to.column}
+                      {rel.to.table}.
+                      {(rel.to.columns ||
+                        (rel.to.column ? [rel.to.column] : ["?"])
+                      ).join(",")}
                     </span>
                   </button>
                 ))
@@ -400,6 +528,18 @@ export default function ErdPage() {
           </div>
         </section>
       </div>
+      <style jsx>{`
+        .erd-flow {
+          stroke-dasharray: 10 6;
+          animation: erd-flow 1.2s linear infinite;
+        }
+
+        @keyframes erd-flow {
+          to {
+            stroke-dashoffset: -16;
+          }
+        }
+      `}</style>
     </div>
   );
 }

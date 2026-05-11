@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-11T07:48:34.884Z",
+  "generatedAt": "2026-05-11T09:49:37.923Z",
   "database": "qashierwise",
   "tables": [
     {
@@ -4115,819 +4115,1197 @@
       "from": {
         "schema": "public",
         "table": "ai_agent_conversations",
-        "column": "ai_agent_id"
+        "columns": [
+          "ai_agent_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "ai_agents",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "ai_agent_conversations_current_order_id_foreign",
       "from": {
         "schema": "public",
         "table": "ai_agent_conversations",
-        "column": "current_order_id"
+        "columns": [
+          "current_order_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "orders",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "ai_agent_conversations_current_qris_transaction_id_foreign",
       "from": {
         "schema": "public",
         "table": "ai_agent_conversations",
-        "column": "current_qris_transaction_id"
+        "columns": [
+          "current_qris_transaction_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "qris_transactions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "ai_agent_conversations_whatsapp_contact_id_foreign",
       "from": {
         "schema": "public",
         "table": "ai_agent_conversations",
-        "column": "whatsapp_contact_id"
+        "columns": [
+          "whatsapp_contact_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "whatsapp_contacts",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "ai_agents_default_store_id_foreign",
       "from": {
         "schema": "public",
         "table": "ai_agents",
-        "column": "default_store_id"
+        "columns": [
+          "default_store_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "stores",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "ai_agents_whatsapp_account_id_foreign",
       "from": {
         "schema": "public",
         "table": "ai_agents",
-        "column": "whatsapp_account_id"
+        "columns": [
+          "whatsapp_account_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "whatsapp_accounts",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": true,
+      "isNullable": false
     },
     {
       "name": "ai_prompt_analytics_ai_agent_id_foreign",
       "from": {
         "schema": "public",
         "table": "ai_prompt_analytics",
-        "column": "ai_agent_id"
+        "columns": [
+          "ai_agent_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "ai_agents",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "blog_post_blog_tag_blog_post_id_foreign",
       "from": {
         "schema": "public",
         "table": "blog_post_blog_tag",
-        "column": "blog_post_id"
+        "columns": [
+          "blog_post_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "blog_posts",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "blog_post_blog_tag_blog_tag_id_foreign",
       "from": {
         "schema": "public",
         "table": "blog_post_blog_tag",
-        "column": "blog_tag_id"
+        "columns": [
+          "blog_tag_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "blog_tags",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "blog_posts_blog_category_id_foreign",
       "from": {
         "schema": "public",
         "table": "blog_posts",
-        "column": "blog_category_id"
+        "columns": [
+          "blog_category_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "blog_categories",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "blog_posts_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "blog_posts",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "categories_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "categories",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "credential_access_logs_credential_id_foreign",
       "from": {
         "schema": "public",
         "table": "credential_access_logs",
-        "column": "credential_id"
+        "columns": [
+          "credential_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "payment_provider_credentials",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "credential_access_logs_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "credential_access_logs",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "financial_audit_logs_admin_id_foreign",
       "from": {
         "schema": "public",
         "table": "financial_audit_logs",
-        "column": "admin_id"
+        "columns": [
+          "admin_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "financial_audit_logs_sub_merchant_id_foreign",
       "from": {
         "schema": "public",
         "table": "financial_audit_logs",
-        "column": "sub_merchant_id"
+        "columns": [
+          "sub_merchant_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "sub_merchants",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "financial_audit_logs_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "financial_audit_logs",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "merchant_balances_sub_merchant_id_foreign",
       "from": {
         "schema": "public",
         "table": "merchant_balances",
-        "column": "sub_merchant_id"
+        "columns": [
+          "sub_merchant_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "sub_merchants",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": true,
+      "isNullable": false
     },
     {
       "name": "model_has_permissions_permission_id_foreign",
       "from": {
         "schema": "public",
         "table": "model_has_permissions",
-        "column": "permission_id"
+        "columns": [
+          "permission_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "permissions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "model_has_roles_role_id_foreign",
       "from": {
         "schema": "public",
         "table": "model_has_roles",
-        "column": "role_id"
+        "columns": [
+          "role_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "roles",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "order_items_order_id_foreign",
       "from": {
         "schema": "public",
         "table": "order_items",
-        "column": "order_id"
+        "columns": [
+          "order_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "orders",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "order_items_product_id_foreign",
       "from": {
         "schema": "public",
         "table": "order_items",
-        "column": "product_id"
+        "columns": [
+          "product_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "products",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "orders_pos_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "orders",
-        "column": "pos_user_id"
+        "columns": [
+          "pos_user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "pos_users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "orders_store_id_foreign",
       "from": {
         "schema": "public",
         "table": "orders",
-        "column": "store_id"
+        "columns": [
+          "store_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "stores",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "orders_table_id_foreign",
       "from": {
         "schema": "public",
         "table": "orders",
-        "column": "table_id"
+        "columns": [
+          "table_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "tables",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "payment_provider_credentials_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "payment_provider_credentials",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "payments_order_id_foreign",
       "from": {
         "schema": "public",
         "table": "payments",
-        "column": "order_id"
+        "columns": [
+          "order_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "orders",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "payments_qris_transaction_id_foreign",
       "from": {
         "schema": "public",
         "table": "payments",
-        "column": "qris_transaction_id"
+        "columns": [
+          "qris_transaction_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "qris_transactions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "platform_fees_qris_transaction_id_foreign",
       "from": {
         "schema": "public",
         "table": "platform_fees",
-        "column": "qris_transaction_id"
+        "columns": [
+          "qris_transaction_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "qris_transactions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "pos_users_store_id_foreign",
       "from": {
         "schema": "public",
         "table": "pos_users",
-        "column": "store_id"
+        "columns": [
+          "store_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "stores",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "pos_users_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "pos_users",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "products_category_id_foreign",
       "from": {
         "schema": "public",
         "table": "products",
-        "column": "category_id"
+        "columns": [
+          "category_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "categories",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "products_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "products",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "promo_code_usages_promo_code_id_foreign",
       "from": {
         "schema": "public",
         "table": "promo_code_usages",
-        "column": "promo_code_id"
+        "columns": [
+          "promo_code_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "promo_codes",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "promo_code_usages_subscription_id_foreign",
       "from": {
         "schema": "public",
         "table": "promo_code_usages",
-        "column": "subscription_id"
+        "columns": [
+          "subscription_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "subscriptions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "promo_code_usages_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "promo_code_usages",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "qris_transactions_linked_order_id_foreign",
       "from": {
         "schema": "public",
         "table": "qris_transactions",
-        "column": "linked_order_id"
+        "columns": [
+          "linked_order_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "orders",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "qris_transactions_sub_merchant_id_foreign",
       "from": {
         "schema": "public",
         "table": "qris_transactions",
-        "column": "sub_merchant_id"
+        "columns": [
+          "sub_merchant_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "sub_merchants",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "reservation_configs_store_id_foreign",
       "from": {
         "schema": "public",
         "table": "reservation_configs",
-        "column": "store_id"
+        "columns": [
+          "store_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "stores",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "reservation_configs_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "reservation_configs",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "reservations_qris_transaction_id_foreign",
       "from": {
         "schema": "public",
         "table": "reservations",
-        "column": "qris_transaction_id"
+        "columns": [
+          "qris_transaction_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "qris_transactions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "reservations_store_id_foreign",
       "from": {
         "schema": "public",
         "table": "reservations",
-        "column": "store_id"
+        "columns": [
+          "store_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "stores",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "reservations_table_id_foreign",
       "from": {
         "schema": "public",
         "table": "reservations",
-        "column": "table_id"
+        "columns": [
+          "table_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "tables",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "reservations_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "reservations",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "role_has_permissions_permission_id_foreign",
       "from": {
         "schema": "public",
         "table": "role_has_permissions",
-        "column": "permission_id"
+        "columns": [
+          "permission_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "permissions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "role_has_permissions_role_id_foreign",
       "from": {
         "schema": "public",
         "table": "role_has_permissions",
-        "column": "role_id"
+        "columns": [
+          "role_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "roles",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "roles_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "roles",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "stores_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "stores",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "sub_merchants_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "sub_merchants",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": true,
+      "isNullable": false
     },
     {
       "name": "subscription_payments_subscription_id_foreign",
       "from": {
         "schema": "public",
         "table": "subscription_payments",
-        "column": "subscription_id"
+        "columns": [
+          "subscription_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "subscriptions",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "subscription_payments_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "subscription_payments",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "subscriptions_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "subscriptions",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "tables_store_id_foreign",
       "from": {
         "schema": "public",
         "table": "tables",
-        "column": "store_id"
+        "columns": [
+          "store_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "stores",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "tables_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "tables",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "user_encryption_keys_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "user_encryption_keys",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": true,
+      "isNullable": false
     },
     {
       "name": "whatsapp_accounts_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_accounts",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "whatsapp_contacts_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_contacts",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "whatsapp_media_message_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_media",
-        "column": "message_id"
+        "columns": [
+          "message_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "whatsapp_messages",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": true
     },
     {
       "name": "whatsapp_media_whatsapp_account_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_media",
-        "column": "whatsapp_account_id"
+        "columns": [
+          "whatsapp_account_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "whatsapp_accounts",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "whatsapp_messages_contact_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_messages",
-        "column": "contact_id"
+        "columns": [
+          "contact_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "whatsapp_contacts",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "whatsapp_messages_user_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_messages",
-        "column": "user_id"
+        "columns": [
+          "user_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "users",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "whatsapp_templates_whatsapp_account_id_foreign",
       "from": {
         "schema": "public",
         "table": "whatsapp_templates",
-        "column": "whatsapp_account_id"
+        "columns": [
+          "whatsapp_account_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "whatsapp_accounts",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     },
     {
       "name": "withdrawal_requests_sub_merchant_id_foreign",
       "from": {
         "schema": "public",
         "table": "withdrawal_requests",
-        "column": "sub_merchant_id"
+        "columns": [
+          "sub_merchant_id"
+        ]
       },
       "to": {
         "schema": "public",
         "table": "sub_merchants",
-        "column": "id"
-      }
+        "columns": [
+          "id"
+        ]
+      },
+      "isUnique": false,
+      "isNullable": false
     }
   ]
 }
