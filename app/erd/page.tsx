@@ -96,11 +96,15 @@ export default function ErdPage() {
     x: 0,
     y: 0,
   });
+  const canvasRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch("/erd-data.json", { cache: "force-cache" });
+        const cacheBuster = Date.now();
+        const response = await fetch(`/erd-data.json?ts=${cacheBuster}`, {
+          cache: "no-store",
+        });
         if (!response.ok) {
           throw new Error(`Failed to load ERD data: ${response.status}`);
         }
@@ -120,6 +124,16 @@ export default function ErdPage() {
     return map;
   }, [nodes]);
 
+  const canvas = useMemo(() => {
+    if (nodes.length === 0) return { width: 0, height: 0 };
+    const maxX = Math.max(...nodes.map((node) => node.x + NODE_WIDTH));
+    const maxY = Math.max(...nodes.map((node) => node.y + node.height));
+    return {
+      width: maxX + 80,
+      height: maxY + 80,
+    };
+  }, [nodes]);
+
   const relations = useMemo(() => {
     if (!data) return [];
     return data.relations.map((rel) => ({
@@ -130,10 +144,25 @@ export default function ErdPage() {
   }, [data]);
 
   const onWheel = (event: WheelEvent<HTMLDivElement>) => {
+    const isZoomIntent = event.ctrlKey || event.metaKey;
+    if (!isZoomIntent) return;
     event.preventDefault();
-    const next = Math.min(2, Math.max(0.5, zoom - event.deltaY * 0.001));
+    const next = Math.min(2, Math.max(0.01, zoom - event.deltaY * 0.001));
     setZoom(next);
   };
+
+  useEffect(() => {
+    const node = canvasRef.current;
+    if (!node) return undefined;
+    const handleWheel = (event: globalThis.WheelEvent) => {
+      if (!event.ctrlKey && !event.metaKey) return;
+      event.preventDefault();
+    };
+    node.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      node.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     dragState.current = { active: true, x: event.clientX, y: event.clientY };
@@ -215,7 +244,8 @@ export default function ErdPage() {
             </div>
           ) : (
             <div
-              className="relative h-[720px] w-full overflow-hidden rounded-3xl border border-slate-200 bg-[linear-gradient(120deg,_rgba(15,23,42,0.03),_rgba(15,23,42,0.01))]"
+              className="relative h-[720px] w-full overflow-auto rounded-3xl border border-slate-200 bg-[linear-gradient(120deg,_rgba(15,23,42,0.03),_rgba(15,23,42,0.01))]"
+              ref={canvasRef}
               onWheel={onWheel}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
@@ -223,8 +253,10 @@ export default function ErdPage() {
               onPointerLeave={onPointerUp}
             >
               <div
-                className="absolute left-0 top-0 h-full w-full"
+                className="absolute left-0 top-0"
                 style={{
+                  width: Math.max(canvas.width, 720),
+                  height: Math.max(canvas.height, 720),
                   transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})`,
                   transformOrigin: "0 0",
                 }}

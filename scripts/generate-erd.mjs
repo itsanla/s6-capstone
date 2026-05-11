@@ -16,11 +16,12 @@ const OUTPUT_PATH = path.join(process.cwd(), "public", "erd-data.json");
 const client = new Client(config);
 
 const queryTables = `
-  SELECT table_schema, table_name
-  FROM information_schema.tables
-  WHERE table_type = 'BASE TABLE'
-    AND table_schema NOT IN ('pg_catalog', 'information_schema')
-  ORDER BY table_schema, table_name;
+  SELECT n.nspname AS table_schema, c.relname AS table_name
+  FROM pg_catalog.pg_class c
+  JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+  WHERE c.relkind IN ('r', 'p', 'f')
+    AND n.nspname NOT IN ('pg_catalog', 'information_schema')
+  ORDER BY n.nspname, c.relname;
 `;
 
 const queryColumns = `
@@ -63,11 +64,9 @@ const tableKey = (schema, name) => `${schema}.${name}`;
 const run = async () => {
   await client.connect();
 
-  const [tablesRes, columnsRes, fksRes] = await Promise.all([
-    client.query(queryTables),
-    client.query(queryColumns),
-    client.query(queryForeignKeys),
-  ]);
+  const tablesRes = await client.query(queryTables);
+  const columnsRes = await client.query(queryColumns);
+  const fksRes = await client.query(queryForeignKeys);
 
   const tables = new Map();
 
