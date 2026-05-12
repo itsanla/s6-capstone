@@ -50,11 +50,17 @@ export default function Home() {
                   process map
                 </span>
               </div>
+              <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                <span className="font-semibold text-slate-800">/class</span>
+                <span className="font-[family:var(--font-home-mono)] text-xs text-slate-400">
+                  class view
+                </span>
+              </div>
             </div>
           </div>
         </header>
 
-        <section className="grid gap-6 lg:grid-cols-3">
+        <section className="grid gap-6 lg:grid-cols-2 xl:grid-cols-4">
           <a
             href="/erd"
             className="group flex flex-col gap-4 rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_25px_55px_-45px_rgba(15,23,42,0.6)] transition hover:-translate-y-1 hover:border-amber-300"
@@ -101,6 +107,22 @@ export default function Home() {
             </p>
             <span className="text-sm font-semibold text-sky-600">
               Open /flowchart →
+            </span>
+          </a>
+
+          <a
+            href="/class"
+            className="group flex flex-col gap-4 rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_25px_55px_-45px_rgba(15,23,42,0.6)] transition hover:-translate-y-1 hover:border-indigo-300"
+          >
+            <div className="text-xs uppercase tracking-[0.3em] text-slate-500">
+              Class
+            </div>
+            <h2 className="text-2xl font-semibold text-slate-900">Class View</h2>
+            <p className="text-sm text-slate-600">
+              Review class relationships and structure at a glance.
+            </p>
+            <span className="text-sm font-semibold text-indigo-600">
+              Open /class →
             </span>
           </a>
         </section>
