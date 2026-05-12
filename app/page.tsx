@@ -1,70 +1,109 @@
-import Image from "next/image";
+import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+
+const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-home" });
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-home-mono",
+});
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+    <div
+      className={`${grotesk.variable} ${mono.variable} min-h-screen w-full bg-[radial-gradient(circle_at_top,_#f6f1e8,_#e8ecf0_45%,_#d8dee6_80%)] text-slate-900`}
+    >
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 pb-16 pt-12">
+        <header className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="space-y-6">
+            <span className="text-xs uppercase tracking-[0.4em] text-slate-500">
+              Qashierwise Visual Atlas
+            </span>
+            <h1 className="text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl">
+              Choose your view
+              <span className="block text-slate-500">and dive deep.</span>
+            </h1>
+            <p className="max-w-xl text-lg text-slate-600">
+              Navigate through database structure, CRM use-case overview, and
+              process flow in one place.
+            </p>
+          </div>
+          <div className="rounded-[28px] border border-white/60 bg-white/70 p-6 shadow-[0_30px_60px_-50px_rgba(15,23,42,0.6)]">
+            <div className="text-xs uppercase tracking-[0.35em] text-slate-500">
+              Quick links
+            </div>
+            <div className="mt-6 space-y-4 text-sm text-slate-600">
+              <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                <span className="font-semibold text-slate-800">/erd</span>
+                <span className="font-[family:var(--font-home-mono)] text-xs text-slate-400">
+                  schema explorer
+                </span>
+              </div>
+              <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                <span className="font-semibold text-slate-800">/usecase</span>
+                <span className="font-[family:var(--font-home-mono)] text-xs text-slate-400">
+                  zoomable image
+                </span>
+              </div>
+              <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                <span className="font-semibold text-slate-800">/flowchart</span>
+                <span className="font-[family:var(--font-home-mono)] text-xs text-slate-400">
+                  process map
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section className="grid gap-6 lg:grid-cols-3">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] bg-white px-5 text-black transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:bg-black dark:text-white dark:hover:bg-[#1a1a1a] md:w-[158px]"
             href="/erd"
+            className="group flex flex-col gap-4 rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_25px_55px_-45px_rgba(15,23,42,0.6)] transition hover:-translate-y-1 hover:border-amber-300"
           >
-            ERD Explorer
+            <div className="text-xs uppercase tracking-[0.3em] text-slate-500">
+              Database
+            </div>
+            <h2 className="text-2xl font-semibold text-slate-900">ERD Explorer</h2>
+            <p className="text-sm text-slate-600">
+              Inspect tables, relations, and cardinality in an interactive
+              layout.
+            </p>
+            <span className="text-sm font-semibold text-amber-600">
+              Open /erd →
+            </span>
           </a>
-        </div>
+
+          <a
+            href="/usecase"
+            className="group flex flex-col gap-4 rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_25px_55px_-45px_rgba(15,23,42,0.6)] transition hover:-translate-y-1 hover:border-emerald-300"
+          >
+            <div className="text-xs uppercase tracking-[0.3em] text-slate-500">
+              CRM Map
+            </div>
+            <h2 className="text-2xl font-semibold text-slate-900">Use Case</h2>
+            <p className="text-sm text-slate-600">
+              Zoom, pan, and read the CRM use-case diagram full screen.
+            </p>
+            <span className="text-sm font-semibold text-emerald-600">
+              Open /usecase →
+            </span>
+          </a>
+
+          <a
+            href="/flowchart"
+            className="group flex flex-col gap-4 rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_25px_55px_-45px_rgba(15,23,42,0.6)] transition hover:-translate-y-1 hover:border-sky-300"
+          >
+            <div className="text-xs uppercase tracking-[0.3em] text-slate-500">
+              Process
+            </div>
+            <h2 className="text-2xl font-semibold text-slate-900">Flowchart</h2>
+            <p className="text-sm text-slate-600">
+              Navigate the end-to-end flow visualization in one click.
+            </p>
+            <span className="text-sm font-semibold text-sky-600">
+              Open /flowchart →
+            </span>
+          </a>
+        </section>
       </main>
     </div>
   );
