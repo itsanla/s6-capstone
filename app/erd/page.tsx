@@ -94,12 +94,14 @@ export default function ErdPage() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 40, y: 40 });
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const dragState = useRef<{ active: boolean; x: number; y: number }>({
     active: false,
     x: 0,
     y: 0,
   });
   const canvasRef = useRef<HTMLDivElement | null>(null);
+  const erdFrameRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -167,6 +169,16 @@ export default function ErdPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     dragState.current = { active: true, x: event.clientX, y: event.clientY };
   };
@@ -181,6 +193,35 @@ export default function ErdPage() {
 
   const onPointerUp = () => {
     dragState.current.active = false;
+  };
+
+  const fitToView = () => {
+    const container = canvasRef.current;
+    if (!container || canvas.width === 0 || canvas.height === 0) return;
+    const padding = 40;
+    const availableWidth = Math.max(200, container.clientWidth - padding * 2);
+    const availableHeight = Math.max(200, container.clientHeight - padding * 2);
+    const scale = Math.min(
+      availableWidth / canvas.width,
+      availableHeight / canvas.height
+    );
+    const nextZoom = Math.max(0.01, scale);
+    const nextOffset = {
+      x: (container.clientWidth - canvas.width * nextZoom) / 2,
+      y: (container.clientHeight - canvas.height * nextZoom) / 2,
+    };
+    setZoom(nextZoom);
+    setOffset(nextOffset);
+  };
+
+  const toggleFullscreen = async () => {
+    const frame = erdFrameRef.current;
+    if (!frame) return;
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await frame.requestFullscreen();
+    }
   };
 
   const totalTables = data?.tables.length ?? 0;
@@ -222,6 +263,20 @@ export default function ErdPage() {
               <div className="rounded-2xl bg-slate-100 px-4 py-2">
                 Zoom: <span className="font-semibold">{zoom.toFixed(2)}x</span>
               </div>
+              <button
+                type="button"
+                onClick={fitToView}
+                className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-amber-300 hover:text-slate-900"
+              >
+                Fit to View
+              </button>
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-amber-300 hover:text-slate-900"
+              >
+                {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+              </button>
             </div>
           </div>
 
@@ -240,14 +295,21 @@ export default function ErdPage() {
           </div>
         </section>
 
-        <section className="rounded-[32px] border border-slate-200/70 bg-white/80 p-4 shadow-[0_35px_80px_-55px_rgba(15,23,42,0.5)]">
+        <section
+          ref={erdFrameRef}
+          className={`rounded-[32px] border border-slate-200/70 bg-white/80 p-4 shadow-[0_35px_80px_-55px_rgba(15,23,42,0.5)] ${
+            isFullscreen ? "fixed inset-0 z-50 rounded-none p-0" : ""
+          }`}
+        >
           {error ? (
             <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-700">
               {error}
             </div>
           ) : (
             <div
-              className="relative h-[720px] w-full overflow-auto rounded-3xl border border-slate-200 bg-[linear-gradient(120deg,_rgba(15,23,42,0.16),_rgba(15,23,42,0.08))]"
+              className={`relative w-full overflow-auto rounded-3xl border border-slate-200 bg-[linear-gradient(120deg,_rgba(15,23,42,0.16),_rgba(15,23,42,0.08))] ${
+                isFullscreen ? "h-screen overflow-hidden rounded-none border-0" : "h-[720px]"
+              }`}
               ref={canvasRef}
               onWheel={onWheel}
               onPointerDown={onPointerDown}
